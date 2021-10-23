@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+apply from: '../dependencies.gradle'
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.mvijsonholder"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets.all {
+        kotlin.srcDir("src/$name/kotlin")
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_version"
+    implementation appDependencies.androidCoreKtx
+    implementation appDependencies.appcompat
+    implementation appDependencies.material
+    implementation appDependencies.constraintlayout
+    implementation appDependencies.navigationFragmentKtx
+    implementation appDependencies.navigationUIKtx
+    implementation appDependencies.koin
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // -Test
+    testImplementation appTestDependencies.junit
+    androidTestImplementation appTestDependencies.supportJunit
+    androidTestImplementation appTestDependencies.espresso
+
+}
