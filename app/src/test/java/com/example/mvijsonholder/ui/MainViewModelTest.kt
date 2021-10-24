@@ -27,7 +27,6 @@ class MainViewModelTest {
     private var getPostUseCase: GetPostUseCase? = null
     private var viewModel: MainViewModel? = null
     private val dispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(dispatcher)
 
     @BeforeEach
     fun setup() {
