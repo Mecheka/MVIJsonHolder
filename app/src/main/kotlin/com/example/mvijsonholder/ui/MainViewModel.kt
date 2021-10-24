@@ -8,7 +8,10 @@ import com.example.mvijsonholder.common.DataState
 import com.example.mvijsonholder.domain.GetPostUseCase
 import com.example.mvijsonholder.domain.PostResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainViewModel(private val getPostUseCase: GetPostUseCase) : BaseViewModel<MainIntent>() {
 
