@@ -11,7 +11,6 @@ import com.example.mvijsonholder.common.BaseFragment
 import com.example.mvijsonholder.common.DataState
 import com.example.mvijsonholder.databinding.FragmentMainBinding
 import com.example.mvijsonholder.ui.adapter.PostAdapter
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
@@ -38,7 +37,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.posts.collect { state ->
+            viewModel.posts.observe(viewLifecycleOwner) { state ->
                 when (state) {
                     is DataState.Empty -> {
                         binding.progressBar.isVisible = true

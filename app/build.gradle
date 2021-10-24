@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'de.mannodermaus.android-junit5'
 }
 
 apply from: '../dependencies.gradle'
@@ -57,8 +58,11 @@ dependencies {
     implementation appDependencies.kotlinVisibility
 
     // -Test
-    testImplementation appTestDependencies.junit
+    testImplementation appTestDependencies.junit4
+    testImplementation appTestDependencies.junit5
+    testImplementation appTestDependencies.junit5Engine
     androidTestImplementation appTestDependencies.supportJunit
     androidTestImplementation appTestDependencies.espresso
-
+    testImplementation appTestDependencies.mockito
+    testImplementation appTestDependencies.coroutine
 }
