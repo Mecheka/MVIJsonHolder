@@ -65,7 +65,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     private fun showDialog(title: String = "Warring", message: String?) {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle(title)
-            .setPositiveButton("OK") {dialog, _ ->
+            .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }
 
