@@ -2,7 +2,6 @@ package com.example.mvijsonholder.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mvijsonholder.R
 import com.example.mvijsonholder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

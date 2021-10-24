@@ -1,8 +1,11 @@
 package com.example.mvijsonholder.domain
 
-class GetPostUseCase {
+import com.example.mvijsonholder.common.DataState
+import kotlinx.coroutines.flow.Flow
 
-    fun execute() {
+class GetPostUseCase(private val repository: PostRepository) {
 
+    fun execute(): Flow<DataState<List<PostResult>>> {
+        return repository.getAllPost()
     }
 }
