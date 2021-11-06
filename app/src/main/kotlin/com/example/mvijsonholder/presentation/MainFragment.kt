@@ -1,4 +1,4 @@
-package com.example.mvijsonholder.ui
+package com.example.mvijsonholder.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvijsonholder.common.BaseFragment
 import com.example.mvijsonholder.common.DataState
 import com.example.mvijsonholder.databinding.FragmentMainBinding
-import com.example.mvijsonholder.ui.adapter.PostAdapter
+import com.example.mvijsonholder.presentation.adapter.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {

@@ -1,4 +1,4 @@
-package com.example.mvijsonholder.ui.adapter
+package com.example.mvijsonholder.presentation.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.mvijsonholder.domain.PostResult

@@ -1,4 +1,4 @@
-package com.example.mvijsonholder.ui.adapter
+package com.example.mvijsonholder.presentation.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter

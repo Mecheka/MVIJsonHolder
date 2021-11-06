@@ -1,11 +1,10 @@
-package com.example.mvijsonholder.ui
+package com.example.mvijsonholder.presentation
 
-import androidx.lifecycle.Observer
 import com.example.mvijsonholder.InstantExecutorExtension
 import com.example.mvijsonholder.common.DataState
 import com.example.mvijsonholder.domain.GetPostUseCase
-import com.example.mvijsonholder.domain.PostRepository
 import com.example.mvijsonholder.domain.PostResult
+import com.jraska.livedata.test
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -18,36 +17,33 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.reset
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class)
 class MainViewModelTest {
 
-    private val repository: PostRepository = mock()
-    private var getPostUseCase: GetPostUseCase? = null
+    private val getPostUseCase: GetPostUseCase = mock()
     private var viewModel: MainViewModel? = null
     private val dispatcher = TestCoroutineDispatcher()
 
     @BeforeEach
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        getPostUseCase = GetPostUseCase(repository)
-        viewModel = MainViewModel(getPostUseCase!!)
+        viewModel = MainViewModel(getPostUseCase, dispatcher)
     }
 
     @AfterEach
     fun down() {
+        dispatcher.cleanupTestCoroutines()
         Dispatchers.resetMain()
-        reset(repository)
-        getPostUseCase = null
+        reset(getPostUseCase)
         viewModel = null
     }
 
     @Test
     fun `Get posts success`() {
-        whenever(repository.getAllPost()).thenReturn(
+        whenever(getPostUseCase.execute()).thenReturn(
             flow {
                 emit(
                     DataState.Success(
@@ -64,38 +60,44 @@ class MainViewModelTest {
             }
         )
 
-        val observer = mock<Observer<DataState<List<PostResult>>>>()
-        viewModel?.posts?.observeForever(observer)
         viewModel?.onTrackingEvent(MainIntent.GetPosts)
 
-        verify(observer).onChanged(
-            DataState.Success(
-                listOf(
-                    PostResult(
-                        body = "test",
-                        id = 0,
-                        title = "test",
-                        userId = 0
+        viewModel?.posts?.test()
+            ?.assertValue(
+                DataState.Success(
+                    listOf(
+                        PostResult(
+                            body = "test",
+                            id = 0,
+                            title = "test",
+                            userId = 0
+                        )
                     )
                 )
             )
-        )
     }
 
     @Test
     fun `Get posts fail`() {
-        whenever(repository.getAllPost()).thenReturn(
+        whenever(getPostUseCase.execute()).thenReturn(
             flow {
-                throw Exception("test")
+                emit(DataState.Error("test"))
             }
         )
 
-        val observer = mock<Observer<DataState<List<PostResult>>>>()
-        viewModel?.posts?.observeForever(observer)
         viewModel?.onTrackingEvent(MainIntent.GetPosts)
 
-        verify(observer).onChanged(
-            DataState.Error("test")
-        )
+        viewModel?.posts?.test()
+            ?.assertValue(DataState.Error("test"))
+    }
+
+    @Test
+    fun `Get posts throw error`() {
+        whenever(getPostUseCase.execute()).thenReturn(flow { throw Exception("test") })
+
+        viewModel?.onTrackingEvent(MainIntent.GetPosts)
+
+        viewModel?.posts?.test()
+            ?.assertValue(DataState.Error("test"))
     }
 }

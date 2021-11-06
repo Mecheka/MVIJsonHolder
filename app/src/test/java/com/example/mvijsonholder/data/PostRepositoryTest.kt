@@ -1,8 +1,6 @@
 package com.example.mvijsonholder.data
 
 import com.example.mvijsonholder.common.DataState
-import com.example.mvijsonholder.domain.PostRepository
-import com.example.mvijsonholder.domain.PostResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -63,7 +61,7 @@ class PostRepositoryTest {
                 DataState.Loading,
                 DataState.Success(
                     data = listOf(
-                        PostResult(
+                        PostResponse(
                             body = "test",
                             id = 0,
                             title = "test",

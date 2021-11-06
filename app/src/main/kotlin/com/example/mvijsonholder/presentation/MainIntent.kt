@@ -1,4 +1,4 @@
-package com.example.mvijsonholder.ui
+package com.example.mvijsonholder.presentation
 
 import com.example.mvijsonholder.common.BaseIntent
 

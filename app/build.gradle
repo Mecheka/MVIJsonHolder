@@ -39,9 +39,17 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
+
+    lintChecks project(Modules.lintRules)
 
     implementation appDependencies.kotlinStd
     implementation appDependencies.coroutine
@@ -59,10 +67,12 @@ dependencies {
 
     // -Test
     testImplementation appTestDependencies.junit4
-    testImplementation appTestDependencies.junit5
-    testImplementation appTestDependencies.junit5Engine
-    androidTestImplementation appTestDependencies.supportJunit
+    testImplementation(platform("org.junit:junit-bom:5.8.1"))
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     androidTestImplementation appTestDependencies.espresso
     testImplementation appTestDependencies.mockito
     testImplementation appTestDependencies.coroutine
+
+    testImplementation 'com.jraska.livedata:testing-ktx:1.2.0'
 }

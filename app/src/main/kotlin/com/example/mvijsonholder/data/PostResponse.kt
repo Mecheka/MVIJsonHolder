@@ -1,10 +1,7 @@
 package com.example.mvijsonholder.data
 
-import com.example.mvijsonholder.domain.PostResult
 import com.google.gson.annotations.SerializedName
-import io.github.esentsov.PackagePrivate
 
-@PackagePrivate
 data class PostResponse(
     @SerializedName("body")
     val body: String,
@@ -15,5 +12,3 @@ data class PostResponse(
     @SerializedName("userId")
     val userId: Int
 )
-
-fun PostResponse.mapToDomain() = PostResult(body = body, id = id, title = title, userId = userId)
